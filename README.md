@@ -1,34 +1,61 @@
 📈 Nova Financial Solutions – Financial News Sentiment Analysis
-🧠 Objective
-This project by Nova Financial Solutions explores how financial news sentiment correlates with market movements. We use NLP, time series analysis, and publisher behavior tracking to identify impactful trends that inform better trading strategies and insights.
+This project explores the relationship between financial news sentiment and stock price movements. It combines natural language processing (NLP), time series analysis, and statistical correlation methods to uncover insights that can inform trading strategies and market behavior understanding.
+
+🧠 Project Objectives
+Main goals:
+
+Analyze sentiment in financial news headlines.
+
+Match sentiment with corresponding stock market behavior.
+
+Identify meaningful correlations to support investment decisions.
 
 📂 Project Structure
-bash
+graphql
 Copy
 Edit
 ├── .vscode/                     # VSCode configuration
 │   └── settings.json
-├── .github/                    # GitHub Actions CI/CD config
+├── .github/                    # CI/CD workflows
 │   └── workflows/
-│       └── unittests.yml       # Automated testing with pytest
-├── .gitignore                  # Ignored files/folders
-├── requirements.txt            # Python dependencies
-├── README.md                   # Project overview (this file)
-├── src/                        # Core Python source code
-│   └── __init__.py
-├── notebooks/                  # Jupyter Notebooks for EDA & modeling
-│   ├── __init__.py
+│       └── unittests.yml       # GitHub Actions: automated testing
+├── data/                       # Raw and processed data (CSV)
+│   └── raw_analyst_ratings.csv
+│   └── stock_prices/*.csv
+├── notebooks/                  # EDA and model experimentation
+│   ├── sentiment_analysis.ipynb
+│   ├── AAPL_historical_data.ipynb
+│   ├── AMZN_historical_data.ipynb
+    ├── Correlation Analysis_All.ipynb
+    ├── EDA.ipynb
+    ├── GOOG_historical_data.ipynb
+    ├── META_historical_data.ipynb
+    ├── TSLA_historical_data.ipynb
 │   └── README.md
-├── tests/                      # Unit test cases for validation
+├── src/                        # Core modules
+│   ├── data_cleaning.py
+│   ├── sentiment.py
+│   ├── indicators.py
 │   └── __init__.py
-└── scripts/                    # Utility or pipeline scripts
-    ├── __init__.py
-    └── README.md
+├── scripts/                    # Utility and analysis scripts
+│   └── _init_.py
+│   └── article_utils.py
+    └── data_cleaning.py
+    └── indicators.py
+    └── stock_analysis.py
+    └── utility.py
+    └── visuals.py
+
+├── tests/                      # Unit tests
+│   └── test_sentiment.py
+│   └── __init__.py
+├── requirements.txt            # Python dependencies
+└── README.md                   # You're here!
 🔍 Key Features
 📊 Sentiment Analysis
-Classifies headline sentiments (positive, negative, neutral, etc.)
+Extracts and classifies headline sentiment using rule-based NLP tools.
 
-Percent breakdown:
+Sentiment class distribution:
 
 🟰 Neutral: 53.54%
 
@@ -40,56 +67,82 @@ Percent breakdown:
 
 ⚠️ Very Negative: 0.57%
 
-⏱️ Time Series Trends
-Publication frequency over:
+📈 Time Series Trends
+Publication frequency tracked over:
 
-Years, Months, Weekdays, Hours
+Years, Months, Weekdays, and Hours
 
-Event-based filtering (e.g., during earnings seasons)
+Identifies spikes during financial events (e.g., earnings releases)
 
-Spike detection for impactful news cycles
+🗞️ Publisher Insights
+Top publishing sources by volume and sentiment type
 
-🗞️ Publisher & Email Domain Analysis
-Top publishing sources by count and type of sentiment
+Domain extraction from publisher info
 
-Extracted email domains from publisher names (if available)
-
-Visualized domain contributions (bar charts and percentages)
+Publisher-level sentiment trends
 
 🧾 Headline Statistics
-Basic text metrics: mean, median, and standard deviation of headline length
+Analyzes length, token frequency, and key financial terms
 
-Tokenization and keyword frequency for financial terms
+Frequent keywords: stock, EPS, price, estimate, Q1–Q4
 
-Common terms: stock, shares, eps, price, estimate, q1-q4
+⚙️ Data Processing Pipeline
+🔄 Data Preparation
+Normalize Dates: Ensures consistent date format across datasets
+
+Sentiment Analysis: Applies a simple but robust sentiment scoring system to headlines
+
+📉 Stock Movement Analysis
+Compute Daily Returns: Calculates percent change in closing prices
+
+🔗 Correlation Analysis
+Aggregate Sentiment: Averages sentiment scores per stock per day
+
+Merge with Returns: Aligns stock return data with sentiment by ticker and date
+
+Calculate Correlation:
+
+Pearson, Spearman, and Kendall coefficients
+
+Heatmaps generated per ticker for visual insight
 
 📦 Installation
-Clone the repo:
-
 bash
 Copy
 Edit
 git clone https://github.com/yourusername/Nova-Financial-Solutions.git
 cd Nova-Financial-Solutions
-Install dependencies:
-
-bash
-Copy
-Edit
 pip install -r requirements.txt
-🧪 Testing
-Run the unit tests via:
-
+🧪 Running Tests
 bash
 Copy
 Edit
 pytest
-GitHub Actions in .github/workflows/unittests.yml automates testing on push.
+Automated testing is enabled via GitHub Actions under .github/workflows/unittests.yml.
 
-🚀 Future Enhancements
-Link stock price data with sentiment
+📊 EDA Highlights
+Each notebook walks through:
 
-Develop ML model to predict price movements
+📅 Time-based sentiment publishing trends
 
-Create real-time dashboard for financial sentiment signals
+🧮 Sentiment score distribution
 
+📈 Stock return trend analysis
+
+🔗 Correlation between news sentiment and daily returns
+
+🧭 Heatmaps per ticker to visualize sentiment–price relationships
+
+🧠 Observations & Edge Cases
+NaN correlations occur when a stock has too few matching news articles (e.g., TSLA, AMZN, AAPL with ≤2 data points).
+
+Missing Stocks (META, MSFT) may be due to:
+
+Lack of matching headlines in the dataset
+
+Errors during data merging or filtering
+
+For robust correlation, a minimum number of valid sentiment-return pairs per ticker is required (we use a threshold of >2).
+
+🙌 Acknowledgments
+Project for 10 Acadamy Week 1
